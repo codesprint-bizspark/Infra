@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bizpark-api
+  labels:
+    app.kubernetes.io/name: bizpark-api
+    app.kubernetes.io/component: api
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: bizpark-api
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bizpark-admin
+  labels:
+    app.kubernetes.io/name: bizpark-admin
+    app.kubernetes.io/component: admin
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: bizpark-admin
+  ports:
+    - name: http
+      port: 3002
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bizpark-commerce
+  labels:
+    app.kubernetes.io/name: bizpark-commerce
+    app.kubernetes.io/component: commerce-api
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: bizpark-commerce
+  ports:
+    - name: http
+      port: 3003
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bizpark-commerce-web
+  labels:
+    app.kubernetes.io/name: bizpark-commerce-web
+    app.kubernetes.io/component: commerce-web
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: bizpark-commerce-web
+  ports:
+    - name: http
+      port: 3004
+      targetPort: http

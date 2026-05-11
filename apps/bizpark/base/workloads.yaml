@@ -1,0 +1,175 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bizpark-api
+  labels:
+    app.kubernetes.io/name: bizpark-api
+    app.kubernetes.io/component: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bizpark-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bizpark-api
+        app.kubernetes.io/component: api
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: api
+          image: ghcr.io/adeepak2/bizpark-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: bizpark-runtime-env
+          readinessProbe:
+            tcpSocket:
+              port: http
+          livenessProbe:
+            tcpSocket:
+              port: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bizpark-admin
+  labels:
+    app.kubernetes.io/name: bizpark-admin
+    app.kubernetes.io/component: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bizpark-admin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bizpark-admin
+        app.kubernetes.io/component: admin
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: admin
+          image: ghcr.io/adeepak2/bizpark-admin:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3002
+          envFrom:
+            - secretRef:
+                name: bizpark-runtime-env
+          readinessProbe:
+            tcpSocket:
+              port: http
+          livenessProbe:
+            tcpSocket:
+              port: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bizpark-commerce
+  labels:
+    app.kubernetes.io/name: bizpark-commerce
+    app.kubernetes.io/component: commerce-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bizpark-commerce
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bizpark-commerce
+        app.kubernetes.io/component: commerce-api
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: commerce
+          image: ghcr.io/adeepak2/bizpark-commerce:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3003
+          envFrom:
+            - secretRef:
+                name: bizpark-runtime-env
+          readinessProbe:
+            tcpSocket:
+              port: http
+          livenessProbe:
+            tcpSocket:
+              port: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bizpark-commerce-web
+  labels:
+    app.kubernetes.io/name: bizpark-commerce-web
+    app.kubernetes.io/component: commerce-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bizpark-commerce-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bizpark-commerce-web
+        app.kubernetes.io/component: commerce-web
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: commerce-web
+          image: ghcr.io/adeepak2/bizpark-commerce-web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3004
+          envFrom:
+            - secretRef:
+                name: bizpark-runtime-env
+          readinessProbe:
+            tcpSocket:
+              port: http
+          livenessProbe:
+            tcpSocket:
+              port: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bizpark-runner
+  labels:
+    app.kubernetes.io/name: bizpark-runner
+    app.kubernetes.io/component: runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bizpark-runner
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bizpark-runner
+        app.kubernetes.io/component: runner
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: runner
+          image: ghcr.io/adeepak2/bizpark-runner:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: bizpark-runtime-env
