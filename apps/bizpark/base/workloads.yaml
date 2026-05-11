@@ -20,7 +20,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: api
-          image: ghcr.io/adeepak2/bizpark-api:latest
+          image: ghcr.io/codesprint-bizspark/bizpark-api:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -57,7 +57,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: admin
-          image: ghcr.io/adeepak2/bizpark-admin:latest
+          image: ghcr.io/codesprint-bizspark/bizpark-admin:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -94,7 +94,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: commerce
-          image: ghcr.io/adeepak2/bizpark-commerce:latest
+          image: ghcr.io/codesprint-bizspark/bizpark-commerce:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -131,7 +131,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: commerce-web
-          image: ghcr.io/adeepak2/bizpark-commerce-web:latest
+          image: ghcr.io/codesprint-bizspark/bizpark-commerce-web:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -168,7 +168,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: runner
-          image: ghcr.io/adeepak2/bizpark-runner:latest
+          image: ghcr.io/codesprint-bizspark/bizpark-runner:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:

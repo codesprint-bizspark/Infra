@@ -4,20 +4,20 @@ namespace: bizpark
 resources:
   - ../../base
 images:
-  - name: ghcr.io/adeepak2/bizpark-api
-    newName: ghcr.io/adeepak2/bizpark-api
+  - name: ghcr.io/codesprint-bizspark/bizpark-api
+    newName: ghcr.io/codesprint-bizspark/bizpark-api
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
-  - name: ghcr.io/adeepak2/bizpark-admin
-    newName: ghcr.io/adeepak2/bizpark-admin
+  - name: ghcr.io/codesprint-bizspark/bizpark-admin
+    newName: ghcr.io/codesprint-bizspark/bizpark-admin
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
-  - name: ghcr.io/adeepak2/bizpark-commerce
-    newName: ghcr.io/adeepak2/bizpark-commerce
+  - name: ghcr.io/codesprint-bizspark/bizpark-commerce
+    newName: ghcr.io/codesprint-bizspark/bizpark-commerce
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
-  - name: ghcr.io/adeepak2/bizpark-commerce-web
-    newName: ghcr.io/adeepak2/bizpark-commerce-web
+  - name: ghcr.io/codesprint-bizspark/bizpark-commerce-web
+    newName: ghcr.io/codesprint-bizspark/bizpark-commerce-web
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
-  - name: ghcr.io/adeepak2/bizpark-runner
-    newName: ghcr.io/adeepak2/bizpark-runner
+  - name: ghcr.io/codesprint-bizspark/bizpark-runner
+    newName: ghcr.io/codesprint-bizspark/bizpark-runner
     digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
 labels:
   - pairs:

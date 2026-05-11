@@ -9,7 +9,8 @@ apps/bizpark/overlays/prod
 ```
 
 The BE repository workflow updates `apps/bizpark/overlays/prod/kustomization.yaml`
-with immutable GHCR image digests after every successful build on `main`.
+with immutable `ghcr.io/codesprint-bizspark/*` image digests after every
+successful build on `main`.
 
 ## Cluster prerequisites
 
