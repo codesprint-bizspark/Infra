@@ -5,6 +5,7 @@ resources:
   - workloads.yaml
   - services.yaml
   - redis.yaml
+  - bizpark-runtime-env-sealed.yaml
 labels:
   - pairs:
       app.kubernetes.io/part-of: bizpark
