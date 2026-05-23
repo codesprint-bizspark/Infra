@@ -4,6 +4,7 @@ resources:
   - namespace.yaml
   - workloads.yaml
   - services.yaml
+  - redis.yaml
 labels:
   - pairs:
       app.kubernetes.io/part-of: bizpark
