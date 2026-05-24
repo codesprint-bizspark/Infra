@@ -9,6 +9,13 @@ spec:
   rules:
   - http:
       paths:
+      - path: /api/commerce
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-commerce
+            port:
+              number: 3003
       - path: /api
         pathType: Prefix
         backend:
