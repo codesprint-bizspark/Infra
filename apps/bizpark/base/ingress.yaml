@@ -16,6 +16,13 @@ spec:
             name: bizpark-api
             port:
               number: 3000
+      - path: /admin
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-admin
+            port:
+              number: 3002
       - path: /
         pathType: Prefix
         backend:
