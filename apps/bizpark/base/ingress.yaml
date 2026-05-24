@@ -1,35 +1,54 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: bizpark-ingress
+  name: bizpark-master-ingress
   namespace: bizpark
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    # Force Traefik to listen securely on HTTPS
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
+  # Attach the Cloudflare certificate
+  tls:
+  - hosts:
+    - "api.bizspark.randitha.net"
+    - "admin.bizspark.randitha.net"
+    - "commerce.bizspark.randitha.net"
+    - "bizspark.randitha.net"
+    secretName: cf-origin-cert
   rules:
-  - http:
+  - host: "api.bizspark.randitha.net"
+    http:
       paths:
-      - path: /api/commerce
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-commerce
-            port:
-              number: 3003
-      - path: /api
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: bizpark-api
             port:
               number: 3000
-      - path: /admin
+  - host: "admin.bizspark.randitha.net"
+    http:
+      paths:
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: bizpark-admin
             port:
               number: 3002
+  - host: "commerce.bizspark.randitha.net"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-commerce
+            port:
+              number: 3003
+  - host: "bizspark.randitha.net"
+    http:
+      paths:
       - path: /
         pathType: Prefix
         backend:
