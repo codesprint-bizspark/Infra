@@ -6,19 +6,19 @@ resources:
 images:
   - name: ghcr.io/codesprint-bizspark/bizpark-api
     newName: ghcr.io/codesprint-bizspark/bizpark-api
-    digest: sha256:cb531fa892c2c5e0af544b75980deedc341c9403dc326618293c93a53dc783a7
+    digest: sha256:b728117b297419b20c8f0f30acbee1f65dd2d1b1f508b9840bc9fbe23e82c455
   - name: ghcr.io/codesprint-bizspark/bizpark-admin
     newName: ghcr.io/codesprint-bizspark/bizpark-admin
-    digest: sha256:37f11b1d37060855bd5cca89483b26cb5e42f905dd8a8344e4ed65673066add9
+    digest: sha256:a540704e9cebf35c84de89b47ee4ce603e7ea3f05f4fb4864df4d4438d854831
   - name: ghcr.io/codesprint-bizspark/bizpark-commerce
     newName: ghcr.io/codesprint-bizspark/bizpark-commerce
-    digest: sha256:be5708e96846108abf494dc0878be87f2e41d08a6c41284a4caca70a1c802d35
+    digest: sha256:5963dfbe6bf78da9227bb1a9393e87ff41ee1e3f9e93fe3300d7ad7037e978e7
   - name: ghcr.io/codesprint-bizspark/bizpark-commerce-web
     newName: ghcr.io/codesprint-bizspark/bizpark-commerce-web
     digest: sha256:1cbdafa18f394b546f2027670ac12d27dc70c126f4d750f0eb093cc0fb264e59
   - name: ghcr.io/codesprint-bizspark/bizpark-runner
     newName: ghcr.io/codesprint-bizspark/bizpark-runner
-    digest: sha256:74bb09f4faa4d84861f3244b45b63447e24d3410bf205c0bbc6849b848475dab
+    digest: sha256:fcffea280b70a9154c8c31b26f2a3a78d50d97a3b139b7944d70b2ad2ac5d1ce
 labels:
   - pairs:
       app.kubernetes.io/part-of: bizpark
