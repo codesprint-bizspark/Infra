@@ -61,3 +61,19 @@ spec:
     - name: http
       port: 3004
       targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bizpark-mcp
+  labels:
+    app.kubernetes.io/name: bizpark-mcp
+    app.kubernetes.io/component: mcp
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: bizpark-mcp
+  ports:
+    - name: http
+      port: 3005
+      targetPort: http

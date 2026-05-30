@@ -36,6 +36,23 @@ spec:
             name: bizpark-admin
             port:
               number: 3002
+
+      # MCP server (SSE transport) — AI Connect for customers
+      - path: /sse
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /message
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+
   - host: "commerce.bizspark.randitha.net"
     http:
       paths:
@@ -49,6 +66,7 @@ spec:
   - host: "bizspark.randitha.net"
     http:
       paths:
+
       - path: /
         pathType: Prefix
         backend:
