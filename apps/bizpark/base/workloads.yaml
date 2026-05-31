@@ -241,6 +241,10 @@ spec:
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
+          # AI fallback (Gemini primary → MiniMax → OpenAI)
+          env:
+            - name: MINIMAX_API_KEY
+              value: "sk-cp-u7uVJij25D7R9_vMVYkeLBj1JVqzfnfvfKMzY2URZ05qweF2kwI8HFEksrhsZSYRFcV3N93zdrpNbqXAQeb5moL6YN6tYxdXfT2zZ9ijxB780BOfv3uMBzY"
 ---
 apiVersion: apps/v1
 kind: Deployment
