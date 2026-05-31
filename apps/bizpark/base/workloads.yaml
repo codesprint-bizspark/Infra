@@ -28,6 +28,11 @@ spec:
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
+          # Public storefront base for generated "view your store" links.
+          # Explicit env overrides the value from the secret.
+          env:
+            - name: COMMERCE_WEB_URL
+              value: "https://store.bizspark.randitha.net"
           readinessProbe:
             tcpSocket:
               port: http
