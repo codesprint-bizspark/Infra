@@ -28,11 +28,14 @@ spec:
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
-          # Public storefront base for generated "view your store" links.
-          # Explicit env overrides the value from the secret.
+          # Public URLs (domain). Explicit env overrides the values from the secret.
           env:
             - name: COMMERCE_WEB_URL
               value: "https://store.bizspark.randitha.net"
+            - name: PUBLIC_API_URL
+              value: "https://bizspark.randitha.net"
+            - name: FRONTEND_URL
+              value: "https://bizspark.randitha.net"
           readinessProbe:
             tcpSocket:
               port: http
@@ -243,7 +246,7 @@ spec:
         - name: frontend
           # Pinned to a unique build tag so the node pulls the new image (CI also
           # publishes :latest; add INFRA_REPO_TOKEN to auto-pin future builds).
-          image: ghcr.io/codesprint-bizspark/bizpark-frontend:sha-3f04fbf1929f02ce36408557e1132f29bce7278c
+          image: ghcr.io/codesprint-bizspark/bizpark-frontend:sha-13ed7e9caf66d8731bfc677139d23308f2fe5566
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
