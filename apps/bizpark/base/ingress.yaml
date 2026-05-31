@@ -7,66 +7,17 @@ metadata:
     # Serve on both HTTP (raw-IP access) and HTTPS (domain via Cloudflare)
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
-  # Attach the Cloudflare certificate
+  # cf-origin-cert is served to Cloudflare; with SSL mode = Full, Cloudflare does
+  # not validate it, so 1-level hosts (covered by free *.randitha.net edge cert) work.
   tls:
   - hosts:
-    - "api.bizspark.randitha.net"
-    - "admin.bizspark.randitha.net"
-    - "commerce.bizspark.randitha.net"
     - "bizspark.randitha.net"
-    # Storefront: default host + per-tenant subdomains
-    - "store.bizspark.randitha.net"
-    - "*.bizspark.randitha.net"
+    - "store.randitha.net"
+    - "commerce.randitha.net"
+    - "admin.randitha.net"
     secretName: cf-origin-cert
   rules:
-  - host: "api.bizspark.randitha.net"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-api
-            port:
-              number: 3000
-  - host: "admin.bizspark.randitha.net"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-admin
-            port:
-              number: 3002
-
-      # MCP server (SSE transport) — AI Connect for customers
-      - path: /sse
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-mcp
-            port:
-              number: 3005
-      - path: /message
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-mcp
-            port:
-              number: 3005
-
-  - host: "commerce.bizspark.randitha.net"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-commerce
-            port:
-              number: 3003
-  # Apex domain → SaaS dashboard (frontend), with the API on the same origin (/api)
+  # Apex → SaaS dashboard (frontend), with API on the same origin (/api)
   - host: "bizspark.randitha.net"
     http:
       paths:
@@ -84,8 +35,44 @@ spec:
             name: bizpark-frontend
             port:
               number: 3000
-  # Storefront default host (commerce-web; tenant via ?tenant=<slug> or cookie).
-  - host: "store.bizspark.randitha.net"
+  # Commerce API (products, mobile config)
+  - host: "commerce.randitha.net"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-commerce
+            port:
+              number: 3003
+  # Admin panel + MCP server (SSE) for AI Connect
+  - host: "admin.randitha.net"
+    http:
+      paths:
+      - path: /sse
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /message
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-admin
+            port:
+              number: 3002
+  # Storefront (commerce-web; tenant via ?tenant=<slug> or cookie)
+  - host: "store.randitha.net"
     http:
       paths:
       - path: /
@@ -95,20 +82,7 @@ spec:
             name: bizpark-commerce-web
             port:
               number: 3004
-  # Per-tenant subdomains → customer storefronts (commerce-web reads the tenant
-  # from the subdomain label). Specific hosts above take precedence over this.
-  - host: "*.bizspark.randitha.net"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-commerce-web
-            port:
-              number: 3004
-  # Host-less catch-all → lets raw-IP (http://<node-ip>) reach the dashboard + API
-  # on the same origin. Lowest priority; named hosts above always win.
+  # Host-less catch-all → raw-IP access to dashboard + API
   - http:
       paths:
       - path: /api

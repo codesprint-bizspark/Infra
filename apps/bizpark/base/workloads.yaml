@@ -31,7 +31,7 @@ spec:
           # Public URLs (domain). Explicit env overrides the values from the secret.
           env:
             - name: COMMERCE_WEB_URL
-              value: "https://store.bizspark.randitha.net"
+              value: "https://store.randitha.net"
             - name: PUBLIC_API_URL
               value: "https://bizspark.randitha.net"
             - name: FRONTEND_URL
@@ -246,7 +246,7 @@ spec:
         - name: frontend
           # Pinned to a unique build tag so the node pulls the new image (CI also
           # publishes :latest; add INFRA_REPO_TOKEN to auto-pin future builds).
-          image: ghcr.io/codesprint-bizspark/bizpark-frontend:sha-13ed7e9caf66d8731bfc677139d23308f2fe5566
+          image: ghcr.io/codesprint-bizspark/bizpark-frontend:sha-b554d353110ec347e3883369f910aad6aec787d6
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
