@@ -213,3 +213,38 @@ spec:
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bizpark-frontend
+  labels:
+    app.kubernetes.io/name: bizpark-frontend
+    app.kubernetes.io/component: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bizpark-frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bizpark-frontend
+        app.kubernetes.io/component: frontend
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: frontend
+          # Digest is pinned by the frontend repo's CI (build-publish-ghcr-update-infra.yml).
+          image: ghcr.io/codesprint-bizspark/bizpark-frontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+          readinessProbe:
+            tcpSocket:
+              port: http
+          livenessProbe:
+            tcpSocket:
+              port: http

@@ -77,3 +77,19 @@ spec:
     - name: http
       port: 3005
       targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bizpark-frontend
+  labels:
+    app.kubernetes.io/name: bizpark-frontend
+    app.kubernetes.io/component: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: bizpark-frontend
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
