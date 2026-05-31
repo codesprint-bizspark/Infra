@@ -14,8 +14,8 @@ spec:
     - "admin.bizspark.randitha.net"
     - "commerce.bizspark.randitha.net"
     - "bizspark.randitha.net"
-    # Tenant storefronts are served on per-business subdomains
-    - "*.bizspark.randitha.net"
+    # Storefront host (default tenant; switch tenant via ?tenant=<slug>)
+    - "store.bizspark.randitha.net"
     secretName: cf-origin-cert
   rules:
   - host: "api.bizspark.randitha.net"
@@ -76,9 +76,9 @@ spec:
             name: bizpark-frontend
             port:
               number: 3000
-  # Per-tenant subdomains → customer storefronts (commerce-web reads the tenant
-  # from the Host header). Specific hosts above take precedence over this wildcard.
-  - host: "*.bizspark.randitha.net"
+  # Storefront → customer-generated sites (commerce-web reads the tenant from the
+  # subdomain label "store", or from a ?tenant=<slug> query override).
+  - host: "store.bizspark.randitha.net"
     http:
       paths:
       - path: /
