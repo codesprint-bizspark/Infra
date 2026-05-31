@@ -46,7 +46,7 @@ spec:
             name: bizpark-commerce
             port:
               number: 3003
-  # Admin panel + MCP server (SSE) for AI Connect
+  # Admin panel + MCP server (SSE + OAuth) for AI Connect
   - host: "admin.randitha.net"
     http:
       paths:
@@ -58,6 +58,28 @@ spec:
             port:
               number: 3005
       - path: /message
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      # OAuth for claude.ai web connectors (discovery + authorize/token/register)
+      - path: /.well-known/oauth-authorization-server
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /.well-known/oauth-protected-resource
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /oauth
         pathType: Prefix
         backend:
           service:
