@@ -64,6 +64,14 @@ spec:
             name: bizpark-mcp
             port:
               number: 3005
+      # Streamable HTTP transport for claude.ai web connectors
+      - path: /mcp
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
       # OAuth for claude.ai web connectors (discovery + authorize/token/register)
       - path: /.well-known/oauth-authorization-server
         pathType: Prefix
