@@ -236,8 +236,9 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: frontend
-          # Digest is pinned by the frontend repo's CI (build-publish-ghcr-update-infra.yml).
-          image: ghcr.io/codesprint-bizspark/bizpark-frontend:latest
+          # Pinned to a unique build tag so the node pulls the new image (CI also
+          # publishes :latest; add INFRA_REPO_TOKEN to auto-pin future builds).
+          image: ghcr.io/codesprint-bizspark/bizpark-frontend:sha-3f04fbf1929f02ce36408557e1132f29bce7278c
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
