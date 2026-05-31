@@ -21,7 +21,7 @@ images:
     digest: sha256:7ed56471983d8d57862330d785d508fe3e79b508471cd3b6eb8f81d9347bac88
   - name: ghcr.io/codesprint-bizspark/bizpark-mcp
     newName: ghcr.io/codesprint-bizspark/bizpark-mcp
-    digest: sha256:e9a4e0904aa7da8a5d7b1d321fb2959bdf9cb705a51985f80a39714b57b569e7
+    newTag: sha-b0aafd95d9c802dab01c13d7e35b9e63fc612477
 labels:
   - pairs:
       app.kubernetes.io/part-of: bizpark
