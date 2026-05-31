@@ -41,6 +41,11 @@ spec:
               value: "https://bizspark.randitha.net/api/social/accounts/callback"
             - name: INSTAGRAM_REDIRECT_URI
               value: "https://bizspark.randitha.net/api/social/accounts/callback"
+            # Instagram app (separate from the Facebook app)
+            - name: INSTAGRAM_APP_ID
+              value: "1900920880580090"
+            - name: INSTAGRAM_APP_SECRET
+              value: "aa42ba35441bed628e98c15c7ebad03b"
             # Google Reviews demo (mock connect)
             - name: GOOGLE_BUSINESS_PROVIDER
               value: "mock"
