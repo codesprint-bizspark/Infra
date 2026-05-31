@@ -184,6 +184,11 @@ spec:
           env:
             - name: MCP_PORT
               value: "3005"
+            # Public base URL advertised in the SSE `endpoint` event so remote
+            # MCP clients (Claude Desktop via mcp-remote) POST messages back to
+            # the public domain, not localhost.
+            - name: MCP_PUBLIC_URL
+              value: "https://admin.randitha.net"
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
