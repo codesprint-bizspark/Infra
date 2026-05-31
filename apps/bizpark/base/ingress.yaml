@@ -14,6 +14,8 @@ spec:
     - "admin.bizspark.randitha.net"
     - "commerce.bizspark.randitha.net"
     - "bizspark.randitha.net"
+    # Tenant storefronts are served on per-business subdomains
+    - "*.bizspark.randitha.net"
     secretName: cf-origin-cert
   rules:
   - host: "api.bizspark.randitha.net"
@@ -63,10 +65,22 @@ spec:
             name: bizpark-commerce
             port:
               number: 3003
+  # Apex domain → SaaS dashboard (Next.js frontend)
   - host: "bizspark.randitha.net"
     http:
       paths:
-
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-frontend
+            port:
+              number: 3000
+  # Per-tenant subdomains → customer storefronts (commerce-web reads the tenant
+  # from the Host header). Specific hosts above take precedence over this wildcard.
+  - host: "*.bizspark.randitha.net"
+    http:
+      paths:
       - path: /
         pathType: Prefix
         backend:
