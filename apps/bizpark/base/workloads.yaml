@@ -30,6 +30,12 @@ spec:
             # provider keys) live in the SealedSecret bizpark-runtime-env.
             - secretRef:
                 name: bizpark-runtime-env
+          env:
+            # The Instagram app ID is PUBLIC (it travels in the OAuth URL), not a
+            # secret. The sealed value carried a stale id; this explicit env wins
+            # over envFrom and pins the correct Business_App-IG Instagram app id.
+            - name: INSTAGRAM_APP_ID
+              value: "1900920880580090"
           readinessProbe:
             tcpSocket:
               port: http
