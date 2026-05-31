@@ -26,36 +26,10 @@ spec:
             - name: http
               containerPort: 3000
           envFrom:
+            # All runtime config + secrets (public URLs, social OAuth, billing,
+            # provider keys) live in the SealedSecret bizpark-runtime-env.
             - secretRef:
                 name: bizpark-runtime-env
-          # Public URLs + feature config (domain). Explicit env overrides the secret.
-          env:
-            - name: COMMERCE_WEB_URL
-              value: "https://store.randitha.net"
-            - name: PUBLIC_API_URL
-              value: "https://bizspark.randitha.net"
-            - name: FRONTEND_URL
-              value: "https://bizspark.randitha.net"
-            # Social OAuth callbacks (HTTPS domain — also register in Meta app)
-            - name: FACEBOOK_REDIRECT_URI
-              value: "https://bizspark.randitha.net/api/social/accounts/callback"
-            - name: INSTAGRAM_REDIRECT_URI
-              value: "https://bizspark.randitha.net/api/social/accounts/callback"
-            # Instagram app (separate from the Facebook app)
-            - name: INSTAGRAM_APP_ID
-              value: "1900920880580090"
-            - name: INSTAGRAM_APP_SECRET
-              value: "aa42ba35441bed628e98c15c7ebad03b"
-            # Google Reviews demo (mock connect)
-            - name: GOOGLE_BUSINESS_PROVIDER
-              value: "mock"
-            # Billing (PayHere sandbox). Uncomment + set the secret to enable checkout.
-            - name: PAYHERE_MERCHANT_ID
-              value: "1236046"
-            - name: PAYHERE_SANDBOX
-              value: "true"
-            # - name: PAYHERE_MERCHANT_SECRET
-            #   value: "<your PayHere sandbox merchant secret>"
           readinessProbe:
             tcpSocket:
               port: http
@@ -239,12 +213,10 @@ spec:
           image: ghcr.io/codesprint-bizspark/bizpark-runner:latest
           imagePullPolicy: IfNotPresent
           envFrom:
+            # AI fallback keys (Gemini → MiniMax → OpenAI) come from the
+            # SealedSecret bizpark-runtime-env.
             - secretRef:
                 name: bizpark-runtime-env
-          # AI fallback (Gemini primary → MiniMax → OpenAI)
-          env:
-            - name: MINIMAX_API_KEY
-              value: "sk-cp-u7uVJij25D7R9_vMVYkeLBj1JVqzfnfvfKMzY2URZ05qweF2kwI8HFEksrhsZSYRFcV3N93zdrpNbqXAQeb5moL6YN6tYxdXfT2zZ9ijxB780BOfv3uMBzY"
 ---
 apiVersion: apps/v1
 kind: Deployment
