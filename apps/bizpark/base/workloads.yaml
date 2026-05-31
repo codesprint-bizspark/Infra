@@ -176,7 +176,9 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: mcp
-          image: ghcr.io/codesprint-bizspark/bizpark-mcp:latest
+          # Pinned to the OAuth-capable build (CI update-infra was flaking on
+          # unrelated services, so pin by tag like the frontend).
+          image: ghcr.io/codesprint-bizspark/bizpark-mcp:sha-5b59d8d364f81e3d2a0645750824f348b7eed59f
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
