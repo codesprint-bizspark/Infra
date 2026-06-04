@@ -9,7 +9,7 @@ images:
     digest: sha256:b694af7017bb1b4add8635cc186ac71d4e620a68e2b4afdd948e20037347e5fa
   - name: ghcr.io/codesprint-bizspark/bizpark-admin
     newName: ghcr.io/codesprint-bizspark/bizpark-admin
-    digest: sha256:85408e2d0372bb9c085e7a9953962be6776ae8021831e1bf8b4dc6dd7601d109
+    digest: sha256:413daabb3d87bb5a9577d8353b120f3bfd3830ad646a9682f5f9bc4171fa49bf
   - name: ghcr.io/codesprint-bizspark/bizpark-commerce
     newName: ghcr.io/codesprint-bizspark/bizpark-commerce
     digest: sha256:d02892e40fc395ba6ed75e07d3a69bb586845b06ed3a3a7ece4a061634ee410e
