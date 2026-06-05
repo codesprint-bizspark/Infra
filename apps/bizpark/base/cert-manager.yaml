@@ -1,0 +1,46 @@
+# Let's Encrypt issuer + wildcard cert for per-tenant storefront subdomains.
+#
+# A DNS-only wildcard *.bizspark.online -> VM lets any <slug>.bizspark.online
+# resolve instantly (no per-record creation, no NXDOMAIN, no negative cache).
+# Cloudflare Universal SSL only covers PROXIED records, so the origin (Traefik)
+# must serve a browser-trusted cert for those direct-hit subdomains — this
+# Let's Encrypt wildcard, obtained via DNS-01 using the Cloudflare API token.
+#
+# Prereq (out of band, value not in Git):
+#   kubectl -n cert-manager create secret generic cloudflare-api-token \
+#     --from-literal=api-token='<DNS:Edit token for bizspark.online>'
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-bizspark
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: adithabuwaneka0@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt-bizspark-account
+    solvers:
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
+        selector:
+          dnsZones:
+            - "bizspark.online"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bizspark-wildcard
+  namespace: bizpark
+spec:
+  secretName: bizspark-wildcard-tls
+  issuerRef:
+    name: letsencrypt-bizspark
+    kind: ClusterIssuer
+  commonName: "*.bizspark.online"
+  dnsNames:
+    - "*.bizspark.online"
+    - "bizspark.online"
