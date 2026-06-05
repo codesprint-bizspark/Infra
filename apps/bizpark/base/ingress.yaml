@@ -21,12 +21,6 @@ spec:
     - "commerce.bizspark.online"
     - "admin.bizspark.online"
     secretName: cf-origin-cert
-  # Per-tenant storefront subdomains (<slug>.bizspark.online) hit the VM directly
-  # (DNS-only wildcard, no Cloudflare proxy), so the origin serves a real
-  # browser-trusted Let's Encrypt wildcard cert (issued by cert-manager).
-  - hosts:
-    - "*.bizspark.online"
-    secretName: bizspark-wildcard-tls
   rules:
   # Apex → SaaS dashboard (frontend), with API on the same origin (/api)
   - host: "bizspark.randitha.net"
@@ -218,20 +212,6 @@ spec:
             name: bizpark-commerce-web
             port:
               number: 3004
-  # Per-tenant storefront subdomains: <slug>.bizspark.online → commerce-web.
-  # Exact hosts above (store/admin/commerce/bizspark.bizspark.online) win over this
-  # wildcard; everything else (tenant slugs) lands on the storefront, which resolves
-  # the tenant from the subdomain label.
-  - host: "*.bizspark.online"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-commerce-web
-            port:
-              number: 3004
   # Host-less catch-all → raw-IP access to dashboard + API
   - http:
       paths:
@@ -249,3 +229,34 @@ spec:
             name: bizpark-frontend
             port:
               number: 3000
+---
+# Per-tenant storefront subdomains: <slug>.bizspark.online → commerce-web.
+# A SEPARATE ingress with an explicitly LOW router priority, so the exact-host
+# rules in bizpark-master-ingress (commerce/admin/store/bizspark.bizspark.online)
+# always win; only un-matched tenant slugs fall through to this wildcard. These
+# hosts hit the VM directly (DNS-only wildcard) and are served the Let's Encrypt
+# *.bizspark.online cert (cert-manager), not cf-origin-cert.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bizpark-tenant-ingress
+  namespace: bizpark
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.priority: "1"
+spec:
+  tls:
+  - hosts:
+    - "*.bizspark.online"
+    secretName: bizspark-wildcard-tls
+  rules:
+  - host: "*.bizspark.online"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-commerce-web
+            port:
+              number: 3004
