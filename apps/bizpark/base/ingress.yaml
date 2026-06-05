@@ -20,6 +20,9 @@ spec:
     - "store.bizspark.online"
     - "commerce.bizspark.online"
     - "admin.bizspark.online"
+    # Per-tenant storefront subdomains (<slug>.bizspark.online) — covered by the
+    # free Universal SSL *.bizspark.online edge cert; origin uses Full mode.
+    - "*.bizspark.online"
     secretName: cf-origin-cert
   rules:
   # Apex → SaaS dashboard (frontend), with API on the same origin (/api)
@@ -203,6 +206,20 @@ spec:
               number: 3002
   # Storefront (commerce-web)
   - host: "store.bizspark.online"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-commerce-web
+            port:
+              number: 3004
+  # Per-tenant storefront subdomains: <slug>.bizspark.online → commerce-web.
+  # Exact hosts above (store/admin/commerce/bizspark.bizspark.online) win over this
+  # wildcard; everything else (tenant slugs) lands on the storefront, which resolves
+  # the tenant from the subdomain label.
+  - host: "*.bizspark.online"
     http:
       paths:
       - path: /
