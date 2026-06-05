@@ -60,6 +60,12 @@ spec:
               value: "https://bizspark.online"
             - name: COMMERCE_WEB_URL
               value: "https://store.bizspark.online"
+            # Social OAuth callback — must EXACTLY match the URI configured in the
+            # Meta (Facebook/Instagram) app's Valid OAuth Redirect URIs.
+            - name: FACEBOOK_REDIRECT_URI
+              value: "https://bizspark.online/api/social/accounts/callback"
+            - name: INSTAGRAM_REDIRECT_URI
+              value: "https://bizspark.online/api/social/accounts/callback"
             - name: PAYHERE_MERCHANT_SECRET
               valueFrom:
                 secretKeyRef:
