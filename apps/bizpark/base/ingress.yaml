@@ -6,6 +6,8 @@ metadata:
   annotations:
     # Serve on both HTTP (raw-IP access) and HTTPS (domain via Cloudflare)
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    # Exact hosts win over the tenant wildcard (10) and the catch-all (1).
+    traefik.ingress.kubernetes.io/router.priority: "50"
 spec:
   # cf-origin-cert is served to Cloudflare; with SSL mode = Full, Cloudflare does
   # not validate it, so 1-level hosts (covered by free *.randitha.net edge cert) work.
@@ -212,23 +214,6 @@ spec:
             name: bizpark-commerce-web
             port:
               number: 3004
-  # Host-less catch-all → raw-IP access to dashboard + API
-  - http:
-      paths:
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-api
-            port:
-              number: 3000
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: bizpark-frontend
-            port:
-              number: 3000
 ---
 # Per-tenant storefront subdomains: <slug>.bizspark.online → commerce-web.
 # A SEPARATE ingress with an explicitly LOW router priority, so the exact-host
@@ -243,7 +228,8 @@ metadata:
   namespace: bizpark
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-    traefik.ingress.kubernetes.io/router.priority: "1"
+    # Beats the host-less catch-all (1) but loses to the exact hosts (50).
+    traefik.ingress.kubernetes.io/router.priority: "10"
 spec:
   tls:
   - hosts:
@@ -260,3 +246,33 @@ spec:
             name: bizpark-commerce-web
             port:
               number: 3004
+---
+# Host-less catch-all → raw-IP access to the dashboard + API. LOWEST priority (1)
+# so it only matches requests with no Host (or hosts nothing else handles); every
+# real host (exact rules + the tenant wildcard) wins over it.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bizpark-fallback-ingress
+  namespace: bizpark
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.priority: "1"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-api
+            port:
+              number: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-frontend
+            port:
+              number: 3000
