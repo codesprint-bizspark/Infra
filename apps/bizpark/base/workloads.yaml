@@ -219,7 +219,7 @@ spec:
             # MCP clients (Claude Desktop via mcp-remote) POST messages back to
             # the public domain, not localhost.
             - name: MCP_PUBLIC_URL
-              value: "https://admin.randitha.net"
+              value: "https://admin.bizspark.online"
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
