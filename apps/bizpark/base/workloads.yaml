@@ -36,6 +36,12 @@ spec:
             # over envFrom and pins the correct Business_App-IG Instagram app id.
             - name: INSTAGRAM_APP_ID
               value: "1900920880580090"
+            # Cloudflare DNS — auto-create per-tenant storefront subdomains.
+            # Zone id + base domain are not secret; the API token is in the SealedSecret.
+            - name: CLOUDFLARE_ZONE_ID
+              value: "47d2bcd4c32d454506f12e8ab2bfdf25"
+            - name: BIZSPARK_BASE_DOMAIN
+              value: "bizspark.online"
             # Supabase Storage (media uploads). NOTE: ACCESS_KEY_ID + SECRET are
             # credentials — rotate and move into the SealedSecret when possible.
             - name: SUPABASE_PROJECT_URL
