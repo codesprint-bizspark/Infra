@@ -20,10 +20,13 @@ spec:
     - "store.bizspark.online"
     - "commerce.bizspark.online"
     - "admin.bizspark.online"
-    # Per-tenant storefront subdomains (<slug>.bizspark.online) — covered by the
-    # free Universal SSL *.bizspark.online edge cert; origin uses Full mode.
-    - "*.bizspark.online"
     secretName: cf-origin-cert
+  # Per-tenant storefront subdomains (<slug>.bizspark.online) hit the VM directly
+  # (DNS-only wildcard, no Cloudflare proxy), so the origin serves a real
+  # browser-trusted Let's Encrypt wildcard cert (issued by cert-manager).
+  - hosts:
+    - "*.bizspark.online"
+    secretName: bizspark-wildcard-tls
   rules:
   # Apex → SaaS dashboard (frontend), with API on the same origin (/api)
   - host: "bizspark.randitha.net"
