@@ -284,7 +284,7 @@ spec:
         - name: frontend
           # Pinned to a unique build tag so the node pulls the new image (CI also
           # publishes :latest; add INFRA_REPO_TOKEN to auto-pin future builds).
-          image: ghcr.io/codesprint-bizspark/bizpark-frontend:sha-74ea5c50a53a184b9381b6c6134d88f14b575ff6
+          image: ghcr.io/codesprint-bizspark/bizpark-frontend:sha-1b298e7dee84dbcb65d3d9f56e357d4be5835bd2
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
