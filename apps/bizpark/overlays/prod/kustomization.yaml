@@ -6,13 +6,13 @@ resources:
 images:
   - name: ghcr.io/codesprint-bizspark/bizpark-api
     newName: ghcr.io/codesprint-bizspark/bizpark-api
-    digest: sha256:121daa65c33ed99af7da50d3e03bb8dc20bd115ee7cb3d0f4bb2b71885bb9abc
+    digest: sha256:6580a0c79da7e021342288b3a00be33a2ef155b189abe8aa910d6c146f2841d9
   - name: ghcr.io/codesprint-bizspark/bizpark-admin
     newName: ghcr.io/codesprint-bizspark/bizpark-admin
-    digest: sha256:47eb0ed0c113afe3aca98c9e6e323cdaabb902e738ec2f253794d4c08d2717c5
+    digest: sha256:f865443a133b0e6bc2f0f75d4eae4b7c693f633f59c36f20b8d8da6780642de0
   - name: ghcr.io/codesprint-bizspark/bizpark-commerce
     newName: ghcr.io/codesprint-bizspark/bizpark-commerce
-    digest: sha256:3ee9ec301ec460e60ee5210c133248c4c185d0b5cef687b5e4fd3d1c25d82a4e
+    digest: sha256:7e801aef7e07d1d32e7aad47eed7eb4448ef35f8d8be5ba306f53c2788654f9f
   - name: ghcr.io/codesprint-bizspark/bizpark-commerce-web
     newName: ghcr.io/codesprint-bizspark/bizpark-commerce-web
     digest: sha256:bfcd66a69c8efd96080ea80672ccd6e6ddd39097bebc33486d440e032389ca40
