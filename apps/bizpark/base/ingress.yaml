@@ -6,8 +6,10 @@ metadata:
   annotations:
     # Serve on both HTTP (raw-IP access) and HTTPS (domain via Cloudflare)
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-    # Exact hosts win over the tenant wildcard (10) and the catch-all (1).
-    traefik.ingress.kubernetes.io/router.priority: "50"
+    # NOTE: do NOT set a blanket router.priority here — it would flatten the
+    # per-path priorities (e.g. /api must beat / on the apex). Default
+    # length-based priorities already make exact hosts (~50) beat the tenant
+    # wildcard (explicit 10) and the catch-all (explicit 1).
 spec:
   # cf-origin-cert is served to Cloudflare; with SSL mode = Full, Cloudflare does
   # not validate it, so 1-level hosts (covered by free *.randitha.net edge cert) work.
