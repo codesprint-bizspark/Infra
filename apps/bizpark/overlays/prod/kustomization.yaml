@@ -6,7 +6,7 @@ resources:
 images:
   - name: ghcr.io/codesprint-bizspark/bizpark-api
     newName: ghcr.io/codesprint-bizspark/bizpark-api
-    digest: sha256:93f56c458470ca0f793751c3b1db1ea50ae961a6bcbcf8744c108752eb821220
+    digest: sha256:c32a226e894214c6be40e8d321a112876701c06ef088f64ac879b34100923d01
   - name: ghcr.io/codesprint-bizspark/bizpark-admin
     newName: ghcr.io/codesprint-bizspark/bizpark-admin
     digest: sha256:f865443a133b0e6bc2f0f75d4eae4b7c693f633f59c36f20b8d8da6780642de0
