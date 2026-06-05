@@ -15,7 +15,7 @@ images:
     digest: sha256:3ee9ec301ec460e60ee5210c133248c4c185d0b5cef687b5e4fd3d1c25d82a4e
   - name: ghcr.io/codesprint-bizspark/bizpark-commerce-web
     newName: ghcr.io/codesprint-bizspark/bizpark-commerce-web
-    digest: sha256:e7319ce3f1fb0f673f4a27114f35c33b184ea6bcfed3f420e6dcc40829158509
+    digest: sha256:bfcd66a69c8efd96080ea80672ccd6e6ddd39097bebc33486d440e032389ca40
   - name: ghcr.io/codesprint-bizspark/bizpark-runner
     newName: ghcr.io/codesprint-bizspark/bizpark-runner
     digest: sha256:15f5cc9c05fc3f85bf35cd55dfed961166ef357763481d7272455d092c87253e
