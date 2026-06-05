@@ -184,9 +184,23 @@ spec:
             # in-cluster (no external round-trip).
             - name: INTERNAL_API_URL
               value: "http://bizpark-api:3000"
+            # Server-side storefront SSR fetches the commerce API in-cluster
+            # (NOT commerce.bizspark.online through Cloudflare) to avoid an
+            # external round-trip on every dynamic render.
+            - name: INTERNAL_COMMERCE_URL
+              value: "http://bizpark-commerce:3003"
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
+          # Cap resources so a render spike can never starve the single node
+          # (which previously took down admin/commerce/mcp via probe timeouts).
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "600m"
+              memory: "1Gi"
           readinessProbe:
             tcpSocket:
               port: http
