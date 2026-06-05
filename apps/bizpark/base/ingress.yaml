@@ -15,6 +15,11 @@ spec:
     - "store.randitha.net"
     - "commerce.randitha.net"
     - "admin.randitha.net"
+    # New domain (added alongside; Cloudflare SSL mode Full doesn't validate origin cert)
+    - "bizspark.online"
+    - "store.bizspark.online"
+    - "commerce.bizspark.online"
+    - "admin.bizspark.online"
     secretName: cf-origin-cert
   rules:
   # Apex → SaaS dashboard (frontend), with API on the same origin (/api)
@@ -103,6 +108,101 @@ spec:
               number: 3002
   # Storefront (commerce-web; tenant via ?tenant=<slug> or cookie)
   - host: "store.randitha.net"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-commerce-web
+            port:
+              number: 3004
+  # ──────────────────────────────────────────────────────────────────────────
+  # bizspark.online — new domain, same services, added ALONGSIDE randitha.net.
+  # Apex → SaaS dashboard (frontend) + API on same origin (/api).
+  - host: "bizspark.online"
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-api
+            port:
+              number: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-frontend
+            port:
+              number: 3000
+  # Commerce API
+  - host: "commerce.bizspark.online"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-commerce
+            port:
+              number: 3003
+  # Admin panel + MCP server (SSE + OAuth)
+  - host: "admin.bizspark.online"
+    http:
+      paths:
+      - path: /sse
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /message
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /mcp
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /.well-known/oauth-authorization-server
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /.well-known/oauth-protected-resource
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /oauth
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-mcp
+            port:
+              number: 3005
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bizpark-admin
+            port:
+              number: 3002
+  # Storefront (commerce-web)
+  - host: "store.bizspark.online"
     http:
       paths:
       - path: /
