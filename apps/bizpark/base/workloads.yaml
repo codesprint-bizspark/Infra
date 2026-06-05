@@ -50,6 +50,21 @@ spec:
                 secretKeyRef:
                   name: cloudflare-api
                   key: token
+            # Domain-migration values whose SealedSecret re-seals never decrypted,
+            # so they were stuck on the old randitha.net values. Override here
+            # (explicit env wins over envFrom). PayHere secret = bizspark.online
+            # app secret, from the out-of-band Secret `payhere`.
+            - name: PUBLIC_API_URL
+              value: "https://bizspark.online"
+            - name: FRONTEND_URL
+              value: "https://bizspark.online"
+            - name: COMMERCE_WEB_URL
+              value: "https://store.bizspark.online"
+            - name: PAYHERE_MERCHANT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: payhere
+                  key: merchant-secret
             # Supabase Storage (media uploads). NOTE: ACCESS_KEY_ID + SECRET are
             # credentials — rotate and move into the SealedSecret when possible.
             - name: SUPABASE_PROJECT_URL
