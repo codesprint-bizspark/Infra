@@ -37,11 +37,19 @@ spec:
             - name: INSTAGRAM_APP_ID
               value: "1900920880580090"
             # Cloudflare DNS — auto-create per-tenant storefront subdomains.
-            # Zone id + base domain are not secret; the API token is in the SealedSecret.
+            # Zone id + base domain are not secret. The DNS:Edit token comes from
+            # the out-of-band Secret `cloudflare-api` (created once via kubectl,
+            # like cf-origin-cert/ghcr-pull-secret) — the sealed-secret entry
+            # failed to decrypt (scope mismatch), so we reference a plain Secret.
             - name: CLOUDFLARE_ZONE_ID
               value: "47d2bcd4c32d454506f12e8ab2bfdf25"
             - name: BIZSPARK_BASE_DOMAIN
               value: "bizspark.online"
+            - name: CLOUDFLARE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-api
+                  key: token
             # Supabase Storage (media uploads). NOTE: ACCESS_KEY_ID + SECRET are
             # credentials — rotate and move into the SealedSecret when possible.
             - name: SUPABASE_PROJECT_URL
