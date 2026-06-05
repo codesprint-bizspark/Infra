@@ -179,6 +179,11 @@ spec:
           ports:
             - name: http
               containerPort: 3004
+          env:
+            # Resolve tenant subdomains (<slug>.bizspark.online) via the API,
+            # in-cluster (no external round-trip).
+            - name: INTERNAL_API_URL
+              value: "http://bizpark-api:3000"
           envFrom:
             - secretRef:
                 name: bizpark-runtime-env
